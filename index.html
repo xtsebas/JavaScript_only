@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <script type="application/javascript">
+    const ul = document.createElement('ul')
+    document.body.append(ul)
+
+    const t = document.createElement('textarea')
+    document.body.append(t)
+    const b = document.createElement('button')
+    b.append('SEND')
+    document.body.append(b)
+
+
+    const getMessages = async () => {
+      const response = await fetch('https://chat.tiburoncin.lat/messages')
+      const messages = await response.json()
+      
+      messages.forEach((message) => {
+        const li = document.createElement('li')
+        li.append(`${message.username}: ${message.message}`)
+        ul.append(li)
+      })
+    }
+
+    const postMessage = async () => {
+      console.log(t.value)
+      const body = {
+        username: 'Dennis',
+        message: t.value,
+      }
+      const response = await fetch('https://chat.tiburoncin.lat/messages',
+      {
+        method: 'POST',
+        body: JSON.stringify(body)
+      })
+      ul.innerHTML = ""
+      getMessages()
+    }
+
+    b.addEventListener('click', postMessage)
+
+    getMessages()
+    </script>
+  </body>
+</html>
