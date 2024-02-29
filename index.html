@@ -4,24 +4,33 @@
   </head>
   <body>
     <script type="application/javascript">
-      document.body.style.backgroundColor = '#8a2be2';
-
+      let isColorSet1 = true;
+      document.body.style.background = 'rgb(2,0,36)';
+      document.body.style.background = 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(99,9,121,1) 59%)';
+      
       const container = document.createElement('div')
       container.style.maxWidth = '700px';
       container.style.margin = '0 auto';
-      container.style.maxHeight='600px';
-      container.style.border = '1px solid #ccc';
+      container.style.maxHeight='700px';
       container.style.borderRadius = '8px';
       container.style.overflow = 'hidden';
-      container.style.backgroundColor = '#fff';
+      container.style.background =  'rgb(1,36,0)';
+      container.style.background= 'linear-gradient(90deg, rgba(1,36,0,1) 0%, rgba(30,121,9,1) 15%)';
       container.style.padding = '10px';
       document.body.append(container)
-
+      
       const footer = document.createElement('footer')
       footer.style.display = 'flex';
       footer.style.alignItems = 'center';
+      footer.style.width= '100%';
+      footer.style.background= 'rgb(255,255,255)';
+      footer.style.background= 'linear-gradient(90deg, rgba(255,255,255,1) 32%, rgba(151,151,151,1) 84%)';
+      footer.style.borderRadius = '0px 0px 20px 20px';
       document.body.append(footer)
-    
+
+      const darkmode = document.createElement('button');
+      darkmode.innerHTML= "dark-mode";   
+      
       const ul = document.createElement('ul')
       ul.style.overflowY = 'scroll';
       ul.style.maxHeight = '500px';
@@ -32,9 +41,11 @@
       t.style.width = 'calc(70% - 20px)'; 
       t.style.padding = '10px';
       t.style.boxSizing = 'border-box';
-      t.style.margin = '10px 0';
+      t.style.background= 'rgb(255,255,255)';
+      t.style.background= 'linear-gradient(90deg, rgba(151,151,151,1) 0%, rgba(255,255,255,1) 32%)';
+      t.style.margin = '10px';
       t.style.border = '1px solid #ccc';
-      t.style.borderRadius = '4px';
+      t.style.borderRadius = '0px 0px 4px 4px';
       t.style.display = 'inline-block'; 
       t.placeholder = 'what are you thinking?';
 
@@ -56,7 +67,7 @@
       b.style.width = 'calc(30% - 20px)'; 
       b.style.padding = '10px';
       b.style.boxSizing = 'border-box';
-      b.style.margin = '0';
+      b.style.margin = '10px';
       b.style.backgroundColor = '#4CAF50';
       b.style.color = 'white';
       b.style.border = 'none';
@@ -67,7 +78,7 @@
 
       
       footer.append(t, a, b)
-      container.append(ul, footer);
+      container.append(darkmode, ul, footer);
 
       //function to get the messages
       const getMessages = async () => {
@@ -151,17 +162,41 @@
         t.value = "";
       };
 
+      //dark-mode
+      darkmode.addEventListener( 'click', function() {
+        if (isColorSet1) {  
+          t.style.background= 'rgb(255,255,255)';
+          t.style.background= 'linear-gradient(90deg, rgba(151,151,151,1) 0%, rgba(255,255,255,1) 32%)';
+          footer.style.background= 'rgb(255,255,255)';
+          footer.style.background= 'linear-gradient(90deg, rgba(255,255,255,1) 32%, rgba(151,151,151,1) 84%)';
+          document.body.style.background = 'rgb(2,0,36)';
+          document.body.style.background = 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(99,9,121,1) 59%)';
+          container.style.background = 'rgb(1,36,0)';
+          container.style.background = 'linear-gradient(90deg, rgba(1,36,0,1) 0%, rgba(30,121,9,1) 15%)';
+        } else {
+          t.style.background= 'rgb(151,151,151)';
+          t.style.background= 'linear-gradient(90deg, rgba(255,255,255,1) 32%, rgba(151,151,151,1) 84%)';
+          footer.style.background= 'rgb(151,151,151)';
+          footer.style.background= 'linear-gradient(90deg, rgba(151,151,151,1) 0%, rgba(255,255,255,1) 32%)';
+          document.body.style.background = 'rgb(2,0,36)';
+          document.body.style.background = 'linear-gradient(90deg, rgba(1,36,0,1) 0%, rgba(30,121,9,1) 15%)';
+          container.style.background = 'rgb(1,36,0)';
+          container.style.background = 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(99,9,121,1) 59%)';
+        }
+
+        isColorSet1 = !isColorSet1;
+    })
+
       //post message
       b.addEventListener('click', postMessage);
       t.addEventListener('keypress', function(event){
-        if(event.which === 13 && !event.shiftKey){
-          event.preventDefault();
+        if(event.keyCode === 13 && !event.shiftKey){
           postMessage;
-        };
+        }
       })
 
       //get messages
-      getMessages()
+      setInterval(getMessages, 1000);
     </script>
   </body>
 </html>
